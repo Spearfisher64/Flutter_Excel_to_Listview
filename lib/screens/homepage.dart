@@ -9,6 +9,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future _openFilePicker() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['xlsx', 'xls', 'csv'],
+    );
+    if (result != null) {
+      PlatformFile file = result.files.first;
+
+      debugPrint(file.name);
+      debugPrint(file.bytes.toString());
+      debugPrint(file.size.toString());
+      debugPrint(file.extension);
+      debugPrint(file.path);
+    } else {
+      // User canceled the picker
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +40,9 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                _openFilePicker();
+              },
               icon: const Icon(Icons.list_alt),
               label: const Text('Select Your Excel File'),
               style: ButtonStyle(
