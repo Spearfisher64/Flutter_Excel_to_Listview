@@ -1,6 +1,6 @@
 # flutter_excel_to_listview
 
-A new Flutter project.
+Example for reading data from excel file and creating listview using ListView Builder.
 
 ## Getting Started
 
