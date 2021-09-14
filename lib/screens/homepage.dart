@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                                   excelMap[index]![2].toString() +
                                   '\n' +
                                   'Price: ' +
-                                  excelMap[index]![3].toString(),
+                                  excelMap[index]![4].toString(),
                               style: const TextStyle(
                                   fontSize: 24, color: Colors.white24),
                             ),
