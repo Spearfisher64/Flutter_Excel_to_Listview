@@ -57,7 +57,12 @@ class _HomePageState extends State<HomePage> {
         debugPrint(row[2].toString());
         debugPrint(row[3].toString());
         debugPrint(row[4].toString());
-        excelMap[j++] = row;
+        setState(() {
+          excelMap[j++] = row;
+        });
+
+        debugPrint(excelMap[0]?[0]);
+        debugPrint(excelMap.length.toString());
       }
     }
   }
@@ -120,6 +125,31 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+            ),
+            Expanded(
+              child: excelMap.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: excelMap.length,
+                      itemBuilder: (context, index) => Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        key: ValueKey(excelMap[index]?[0]),
+                        color: const Color(0xff545d6e),
+                        elevation: 4,
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                        child: ListTile(
+                          title: Text(excelMap[index]?[3]),
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          CircularProgressIndicator(),
+                        ],
+                      ),
+                    ),
             ),
           ],
         ),
