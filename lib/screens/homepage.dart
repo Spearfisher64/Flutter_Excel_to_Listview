@@ -147,7 +147,28 @@ class _HomePageState extends State<HomePage> {
                           elevation: 4,
                           margin: const EdgeInsets.symmetric(vertical: 10),
                           child: ListTile(
-                            title: Text(excelMap[index]?[3]),
+                            title: Text(
+                              excelMap[index]?[3],
+                              style: const TextStyle(
+                                fontSize: 24,
+                                color: Colors.white60,
+                              ),
+                            ),
+                            subtitle: Text(
+                              'Id: ' +
+                                  excelMap[index]![0].toString() +
+                                  '\n' +
+                                  'City: ' +
+                                  excelMap[index]![1].toString() +
+                                  '\n' +
+                                  'Km: ' +
+                                  excelMap[index]![2].toString() +
+                                  '\n' +
+                                  'Price: ' +
+                                  excelMap[index]![3].toString(),
+                              style: const TextStyle(
+                                  fontSize: 24, color: Colors.white24),
+                            ),
                           ),
                         ),
                       )
