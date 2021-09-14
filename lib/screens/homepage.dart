@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:excel/excel.dart';
+import 'dart:io';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,6 +13,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var _labelText = "Please Select Excel File";
   bool _getListBtnVsb = false;
+  late String excelPath;
+  Map<int, List<dynamic>> excelMap = Map<int, List<dynamic>>();
 
   Future _openFilePicker() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -19,7 +23,7 @@ class _HomePageState extends State<HomePage> {
     );
     if (result != null) {
       PlatformFile file = result.files.first;
-
+      excelPath = file.path;
       debugPrint(file.name);
       debugPrint(file.bytes.toString());
       debugPrint(file.size.toString());
@@ -35,6 +39,26 @@ class _HomePageState extends State<HomePage> {
         _labelText = "Please Select Excel File";
         _getListBtnVsb = false;
       });
+    }
+  }
+
+  Future _readExcel() async {
+    var file = excelPath;
+    var bytes = File(file).readAsBytesSync();
+    var excel = Excel.decodeBytes(bytes);
+    int j = 0;
+    for (var table in excel.tables.keys) {
+      debugPrint(table);
+      debugPrint(excel.tables[table]!.maxCols.toString());
+      debugPrint(excel.tables[table]!.maxRows.toString());
+      for (var row in excel.tables[table]!.rows) {
+        debugPrint(row[0].toString());
+        debugPrint(row[1].toString());
+        debugPrint(row[2].toString());
+        debugPrint(row[3].toString());
+        debugPrint(row[4].toString());
+        excelMap[j++] = row;
+      }
     }
   }
 
@@ -76,10 +100,10 @@ class _HomePageState extends State<HomePage> {
               visible: _getListBtnVsb,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  //Add Excel Read Function Here
+                  _readExcel();
                 },
                 icon: const Icon(Icons.list_alt),
-                label: Text('Get ListView From Excel'),
+                label: const Text('Get ListView From Excel'),
                 style: ButtonStyle(
                   fixedSize:
                       MaterialStateProperty.all<Size>(const Size(280, 50)),
@@ -87,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                       const EdgeInsets.all(10)),
                   elevation: MaterialStateProperty.all<double>(5.0),
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    const Color(0xffD52941),
+                    const Color(0xff388697),
                   ),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
