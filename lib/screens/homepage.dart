@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:excel/excel.dart';
 import 'dart:io';
 
@@ -12,7 +13,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var _labelText = "Please Select Excel File";
+  bool _pickerVsb = true;
   bool _getListBtnVsb = false;
+  bool _loadingVsb = false;
+  bool _listVsb = false;
   late String excelPath;
   Map<int, List<dynamic>> excelMap = Map<int, List<dynamic>>();
 
@@ -52,13 +56,12 @@ class _HomePageState extends State<HomePage> {
       debugPrint(excel.tables[table]!.maxCols.toString());
       debugPrint(excel.tables[table]!.maxRows.toString());
       for (var row in excel.tables[table]!.rows) {
-        debugPrint(row[0].toString());
-        debugPrint(row[1].toString());
-        debugPrint(row[2].toString());
-        debugPrint(row[3].toString());
-        debugPrint(row[4].toString());
         setState(() {
           excelMap[j++] = row;
+          _loadingVsb = false;
+          _listVsb = true;
+          _getListBtnVsb = false;
+          _pickerVsb = false;
         });
 
         debugPrint(excelMap[0]?[0]);
@@ -79,23 +82,27 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              onPressed: () {
-                _openFilePicker();
-              },
-              icon: const Icon(Icons.list_alt),
-              label: Text(_labelText),
-              style: ButtonStyle(
-                fixedSize: MaterialStateProperty.all<Size>(const Size(280, 50)),
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.all(10)),
-                elevation: MaterialStateProperty.all<double>(5.0),
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  const Color(0xffD52941),
-                ),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+            Visibility(
+              visible: _pickerVsb,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  _openFilePicker();
+                },
+                icon: const Icon(Icons.list_alt),
+                label: Text(_labelText),
+                style: ButtonStyle(
+                  fixedSize:
+                      MaterialStateProperty.all<Size>(const Size(280, 50)),
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                      const EdgeInsets.all(10)),
+                  elevation: MaterialStateProperty.all<double>(5.0),
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                    const Color(0xffD52941),
+                  ),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
                   ),
                 ),
               ),
@@ -126,30 +133,36 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Expanded(
-              child: excelMap.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: excelMap.length,
-                      itemBuilder: (context, index) => Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        key: ValueKey(excelMap[index]?[0]),
-                        color: const Color(0xff545d6e),
-                        elevation: 4,
-                        margin: const EdgeInsets.symmetric(vertical: 10),
-                        child: ListTile(
-                          title: Text(excelMap[index]?[3]),
+            Visibility(
+              visible: _listVsb,
+              child: Expanded(
+                child: excelMap.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: excelMap.length,
+                        itemBuilder: (context, index) => Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          key: ValueKey(excelMap[index]?[0]),
+                          color: const Color(0xff545d6e),
+                          elevation: 4,
+                          margin: const EdgeInsets.symmetric(vertical: 10),
+                          child: ListTile(
+                            title: Text(excelMap[index]?[3]),
+                          ),
+                        ),
+                      )
+                    : Visibility(
+                        visible: _loadingVsb,
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              CircularProgressIndicator(),
+                            ],
+                          ),
                         ),
                       ),
-                    )
-                  : Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          CircularProgressIndicator(),
-                        ],
-                      ),
-                    ),
+              ),
             ),
           ],
         ),

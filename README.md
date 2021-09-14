@@ -2,6 +2,9 @@
 
 Example for reading data from excel file and creating listview using ListView Builder.
 Without Using Database.
+Excel package doesn't contain null safety.
+Please run the application with the following command :
+flutter run --no-sound-null-safety
 
 ## Getting Started
 
