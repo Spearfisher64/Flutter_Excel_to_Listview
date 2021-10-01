@@ -4,6 +4,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:excel/excel.dart';
 import 'dart:io';
 
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -39,10 +41,12 @@ class _HomePageState extends State<HomePage> {
       });
     } else {
       //Cancelled Picker
-      setState(() {
-        _labelText = "Please Select Excel File";
-        _getListBtnVsb = false;
-      });
+      setState(
+        () {
+          _labelText = "Please Select Excel File";
+          _getListBtnVsb = false;
+        },
+      );
     }
   }
 
@@ -70,6 +74,11 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  Future _logout() async {
+    await FacebookAuth.instance.logOut();
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +86,14 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('HomePage'),
         backgroundColor: Colors.green,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              _logout();
+            },
+          ),
+        ],
       ),
       body: Center(
         child: Column(

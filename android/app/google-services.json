@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "420821876811",
+    "project_id": "excel-car-list",
+    "storage_bucket": "excel-car-list.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420821876811:android:d3181bc6835c8fc35f0dce",
+        "android_client_info": {
+          "package_name": "com.example.flutter_excel_to_listview"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420821876811-bgjvcesld980kf3v1st8b89toodgforc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flutter_excel_to_listview",
+            "certificate_hash": "dea068308cf49e95c961775da1c7fa4aee934e14"
+          }
+        },
+        {
+          "client_id": "420821876811-r0q2fetej49hhe6oimnujj1tcsb7ddtg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6Mw-Naj4kXPwH5Kk_1SoVBvCsGGaWMYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420821876811-r0q2fetej49hhe6oimnujj1tcsb7ddtg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_excel_to_listview/screens/loginpage.dart';
 import 'screens/homepage.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const LoginPage(),
     );
   }
 }
